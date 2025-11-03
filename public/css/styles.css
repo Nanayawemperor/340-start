@@ -79,14 +79,14 @@ nav a:hover {
 }
 
 .car-highlight h3 {
-  color: #007bff;
+  color: #0760e6;
   margin-bottom: 0.3rem;
 }
 
 .btn {
   display: inline-block;
-  background-color: #007bff;
-  color: white;
+  background-color: #77dbf7;
+  color: black;
   text-decoration: none;
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
@@ -149,10 +149,10 @@ footer {
   max-width: 1100px;
   margin: 2rem auto;
   background-color: white;
-  border: 6px solid #333;
+  border: 6px solid #1eb1fa;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px rgba(47, 166, 170, 0.3);
 
 }
 
