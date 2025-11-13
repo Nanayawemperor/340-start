@@ -5,8 +5,11 @@
 /* ***********************
  * Require Statements
  *************************/
+const baseController = require('./controllers/baseController')
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
+// Require Statements
+const inventoryRoute = require('./routes/inventoryRoute');
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
@@ -21,9 +24,9 @@ app.set('layout', './layouts/layout') //not at views root
  * Routes
  *************************/
 app.use(require('./routes/static'))
-app.get('/', function(req, res) {
-  res.render('index', { title: 'Home'})
-})
+app.use('/inv', inventoryRoute);
+//index route
+app.get('/', baseController.buildHome)
 app.use(static)
 
 /* ***********************
@@ -39,3 +42,4 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
