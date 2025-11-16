@@ -211,3 +211,17 @@ footer .error-link {
     text-align: center;
   }
 }
+
+@media (max-width: 600px) {
+  .main-nav ul {
+    flex-direction: row;
+    flex-wrap: wrap;  /* wrap instead of hiding links */
+    justify-content: center;
+  }
+
+  .main-nav li {
+    flex: 1 1 45%; /* each link takes ~half width on small screens */
+    text-align: center;
+    margin: 5px 0;
+  }
+}
