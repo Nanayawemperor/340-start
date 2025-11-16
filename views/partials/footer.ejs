@@ -1,5 +1,15 @@
-<% const d = new Date()
-let year = d.getFullYear() %>
+<% 
+  const d = new Date();
+  let year = d.getFullYear(); 
+%>
+
+<%# messages() %>
+
 <footer>
-  <p class="copyright">& copy; <%= year %>, CSE 340 App</p>
+  <p class="copyright">&copy; <%= year %>, CSE 340 App</p>
+
+  <!-- Link to trigger 500 error for testing -->
+  <p>
+    <a href="/inv/cause-error" class="error-link">Error link</a>
+  </p>
 </footer>

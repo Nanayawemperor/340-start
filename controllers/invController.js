@@ -19,4 +19,36 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build inventory item detail view
+ * ************************** */
+invCont.buildInventoryDetail = async function (req, res, next) {
+  try {
+    const invId = req.params.invId;
+    const vehicleData = await invModel.getInventoryByInvId(invId);
+
+    const nav = await utilities.getNav(); 
+     
+    if (!vehicleData) {
+      return res.status(404).render("inventory/detail", {
+        title: "Vehicle Not Found",
+        nav,
+        itemView: "<p class='notice'>Sorry, this vehicle does not exist.</p>"
+      });
+    }
+
+    const itemView = await utilities.buildInventoryDetailView(vehicleData);
+
+    res.render("inventory/detail", {
+      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
+      nav,
+      itemView,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 module.exports = invCont

@@ -14,11 +14,13 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const utilities = require('./utilities')
+const path = require('path')
 
 /* ***********************
  *  View Engine and Templates
  *************************/
 app.set("view engine", "ejs")
+app.set('views', path.join(__dirname, 'views'))
 app.use(expressLayouts)
 app.set('layout', './layouts/layout') //not at views root
 /* ***********************
@@ -48,6 +50,23 @@ app.use(async (err, req, res, next) => {
     title: err.status || 'Server Error',
     message: err.message,
     nav,
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).render("errors/404", {
+    title: "Page Not Found",
+    nav: "<a href='/'>Home</a>",
+    message: "Sorry, the page you requested could not be found."
+  });
+});
+
+// General error handler
+app.use((err, req, res, next) => {
+  console.error("ERROR:", err.message);
+  res.status(500).render("errors/500", {
+    message: "", // optional debug info; leave blank for users
   });
 });
 

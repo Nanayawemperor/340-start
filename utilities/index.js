@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -56,6 +57,30 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+  Util.buildInventoryDetailView = async function (vehicle) {
+    const price = vehicle.inv_price.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
+
+    const mileage = vehicle.inv_miles.toLocaleString("en-US");
+
+    return `
+      <section class="vehicle-detail">
+        <img src="${vehicle.inv_image}" alt="Picture of ${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-detail-img">
+
+        <div class="vehicle-info">
+          <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>
+          <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+          <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+          <p><strong>Mileage:</strong> ${mileage} miles</p>
+          <p><strong>Price:</strong> ${price}</p>
+        </div>
+      </section>
+    `;
+  };
+
 
 /* ****************************************
  * Middleware For Handling Errors
