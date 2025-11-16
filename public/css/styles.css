@@ -196,7 +196,7 @@ footer .error-link {
 
 
 /* Ensure content adjusts on mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   #wrapper {
     margin: 1rem;
     padding: 1rem;
@@ -210,18 +210,15 @@ footer .error-link {
   .vehicle-info {
     text-align: center;
   }
-}
 
-@media (max-width: 600px) {
-  .main-nav ul {
-    flex-direction: row;
-    flex-wrap: wrap;  /* wrap instead of hiding links */
-    justify-content: center;
+  nav ul {
+    flex-wrap: wrap;      /* wrap links instead of hiding */
+    justify-content: flex-start;
   }
 
-  .main-nav li {
-    flex: 1 1 45%; /* each link takes ~half width on small screens */
+  nav li {
+    flex: 1 1 45%;        /* ~2 links per row */
     text-align: center;
-    margin: 5px 0;
+    min-width: 100px;     /* prevent collapsing too small */
   }
 }
