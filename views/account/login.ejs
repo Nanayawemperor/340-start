@@ -1,0 +1,98 @@
+  <!-- Basic CSS styling for a clean professional look -->
+  <style>
+        main {
+      max-width: 450px;
+      background: white;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-top: 0;
+      color: #003366;
+      text-align: center;
+    }
+    form {
+      margin-top: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-bottom: .5rem;
+      font-weight: bold;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: .7rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: .8rem;
+      background: #003366;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #002244;
+    }
+    .message {
+      background: #ffe6e6;
+      color: #a00000;
+      padding: .8rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      border: 1px solid #ffcccc;
+    }
+    .register-link {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+    .register-link a {
+      color: #003366;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+<body>
+
+
+
+  <main>
+
+
+    <!-- Flash message (if present) -->
+    <% if (typeof flash !== "undefined") { %>
+      <div class="message">
+        <%= flash %>
+      </div>
+    <% } %>
+
+    <!-- Login Form -->
+    <form action="/account/login" method="POST">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="register-link">
+      <p>Don't have an account? <a href="/account/register">Register here</a></p>
+    </div>
+  </main>
+
+</body>
