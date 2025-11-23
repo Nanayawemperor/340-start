@@ -2,6 +2,8 @@ const utilities = require(".");
 
 const { body, validationResult } = require('express-validator');
 
+const accountModel = require("../models/account_model");
+
 const validate = {};
 
 /* **********************************
@@ -32,8 +34,14 @@ validate.registrationRules = () => {
       .notEmpty()
       .isEmail()
       .normalizeEmail()
-      .withMessage("A valid email is required."),
-
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+    const emailExists = await accountModel.checkExistingEmail(account_email)
+    if (emailExists){
+      throw new Error("Email exists. Please log in or use different email")
+    }
+      
+    }),
     // password is required and must be strong
     body("account_password")
       .trim()
@@ -70,5 +78,41 @@ validate.checkRegData = async (req, res, next) => {
   }
   next()
 }
+
+validate.loginRules = () => {
+  return [
+    body('account_email')
+    .trim()
+    .escape()
+    .notEmpty()
+    .isEmail()
+    .withMessage('Please enter a valid email address.'),
+
+    body('account_password')
+    .trim()
+    .notEmpty()
+    .withMessage('Please enter your password.')
+
+  ];
+}
+
+/* *******************************
+ *  Check Login Data
+ ******************************** */
+validate.checkLoginData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+
+    // return with sticky email
+    return res.render("account/login", {
+      title: "Login",
+      nav,
+      errors: errors.array(),
+      account_email: req.body.account_email
+    });
+  }
+  next();
+};
 
 module.exports = validate
