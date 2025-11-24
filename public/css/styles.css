@@ -222,3 +222,165 @@ footer .error-link {
     min-width: 100px;     /* prevent collapsing too small */
   }
 }
+
+/* -----------------------------------------
+   FORM STYLING (Add Classification / Inventory)
+------------------------------------------*/
+
+.form-wrapper {
+  background-color: #ffffff;
+  padding: 2rem;
+  border: 4px solid #1eb1fa;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 0 25px rgba(47, 166, 170, 0.25);
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #222;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 2px solid #1eb1fa;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #0760e6;
+  box-shadow: 0 0 8px rgba(7, 96, 230, 0.4);
+}
+
+.submit-btn {
+  background-color: #0760e6;
+  color: #fff;
+  padding: 0.8rem 1.3rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.submit-btn:hover {
+  background-color: #074bb3;
+}
+
+/* Flash messages */
+.notice {
+  background-color: #e6f4ff;
+  padding: 1rem;
+  border-left: 6px solid #0760e6;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+
+/* -----------------------------------------
+   MANAGEMENT PAGE LIST BUTTONS
+------------------------------------------*/
+.management-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+.management-links a {
+  display: block;
+  text-align: center;
+  padding: 1rem;
+  background-color: #1eb1fa;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.management-links a:hover {
+  background-color: #0a94d7;
+  color: white;
+}
+
+
+/* -----------------------------------------
+   CLASSIFICATION GRID PAGE
+------------------------------------------*/
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.inventory-card {
+  background-color: white;
+  border: 3px solid #1eb1fa;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 174, 255, 0.15);
+  text-align: center;
+}
+
+.inventory-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.7rem;
+}
+
+.inventory-card h3 {
+  margin-bottom: 0.3rem;
+}
+
+.inventory-card p {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.inventory-card a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #0760e6;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.inventory-card a:hover {
+  background-color: #074bb3;
+}
+
+
+/* -----------------------------------------
+   MOBILE ADJUSTMENTS FOR NEW PAGES
+------------------------------------------*/
+@media (max-width: 600px) {
+  .form-wrapper {
+    padding: 1.2rem;
+    margin: 1rem;
+  }
+  
+  .management-links {
+    width: 90%;
+  }
+
+  .inventory-card {
+    padding: 0.8rem;
+  }
+}

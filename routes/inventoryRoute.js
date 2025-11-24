@@ -25,6 +25,21 @@ router.post(
   utilities.handleErrors(invController.addClassification)
 );
 
+// Route to build the Add Inventory view
+router.get(
+  "/add-inventory",
+  utilities.handleErrors(invController.buildAddInventory)
+);
+
+// POST process add-inventory
+router.post(
+  "/add-inventory",
+  invValidate.inventoryRules(),
+  invValidate.checkInventoryData,
+  utilities.handleErrors(invController.addInventory)
+);
+
+
 // Footer test link to trigger an error
 router.get("/cause-error", (req, res) => {
   throw new Error("");
