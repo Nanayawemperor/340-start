@@ -1,0 +1,41 @@
+<main class="container">
+  <h1>Add New Classification</h1>
+
+  <!-- Flash message -->
+  <% if (messages && messages.notice) { %>
+    <div class="flash success"><%= messages.notice %></div>
+  <% } %>
+
+  <!-- Server-side validation errors -->
+  <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+    <div class="flash error">
+      <ul>
+        <% errors.forEach(function(err) { %>
+          <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form id="addClassificationForm" action="/inv/add-classification" method="POST" novalidate>
+    <label for="classification_name">Classification Name</label>
+    <!-- pattern: letters and numbers only, no spaces or special chars -->
+    <input
+      id="classification_name"
+      name="classification_name"
+      type="text"
+      required
+      minlength="1"
+      maxlength="50"
+      pattern="^[A-Za-z0-9]+$"
+      title="Use letters and numbers only — no spaces or special characters."
+      value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
+    />
+
+    <small>Note: classification name cannot contain spaces or special characters.</small>
+
+    <button type="submit">Add Classification</button>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>
