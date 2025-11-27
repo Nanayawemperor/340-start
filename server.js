@@ -8,12 +8,13 @@ const inventoryRoute = require('./routes/inventoryRoute')
 const env = require("dotenv").config()
 const app = express()
 const staticRoutes = require("./routes/static")
-const utilities = require('./utilities')
+const utilities = require('./utilities/')
 const path = require('path')
 const session = require("express-session")
 const pool = require("./database/")
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 /* ***********************
  * Body Parsers FIRST
@@ -21,6 +22,8 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine

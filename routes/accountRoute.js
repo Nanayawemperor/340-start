@@ -25,7 +25,13 @@ router.post(
   "/login",
   accountValidate.loginRules(),
   accountValidate.checkLoginData,
-  utilities.handleErrors(accountController.loginAccount)
+  utilities.handleErrors(accountController.accountLogin)
 );
+
+// Account management View
+router.get(
+    '/', 
+    utilities.handleErrors(accountController.buildAccountManagement)
+)
 
 module.exports = router;
