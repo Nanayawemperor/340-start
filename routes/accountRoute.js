@@ -30,7 +30,8 @@ router.post(
 
 // Account management View
 router.get(
-    '/', 
+    '/',
+    utilities.checkLogin,
     utilities.handleErrors(accountController.buildAccountManagement)
 )
 
