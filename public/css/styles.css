@@ -1,22 +1,28 @@
-/******* Change Box Model ***************/
+/************************************
+  GLOBAL RESET & BASE STYLES
+*************************************/
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background-color: #fff;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  overflow-x: hidden;
 }
 
+/************************************
+  HEADER
+*************************************/
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #fff;
+  background: #fff;
 }
 
 header h1 {
@@ -30,16 +36,19 @@ header h1 {
   text-transform: uppercase;
 }
 
+/************************************
+  NAVIGATION
+*************************************/
 nav {
-  background-color: #222;
+  background: #222;
 }
 
 nav ul {
-  list-style: none;
   display: flex;
   justify-content: center;
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 nav li {
@@ -49,20 +58,23 @@ nav li {
 nav a {
   display: block;
   padding: 0.8rem 1.5rem;
-  text-decoration: none;
-  color: white;
+  color: #fff;
   font-weight: bold;
+  text-decoration: none;
 }
 
 nav a:hover {
-  background-color: #007bff;
+  background: #007bff;
 }
 
+/************************************
+  HERO SECTION
+*************************************/
 .hero {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-around;
+  align-items: center;
   padding: 2rem;
 }
 
@@ -85,11 +97,11 @@ nav a:hover {
 
 .btn {
   display: inline-block;
-  background-color: #77dbf7;
+  background: #77dbf7;
   color: black;
-  text-decoration: none;
   padding: 0.6rem 1.2rem;
   border-radius: 5px;
+  text-decoration: none;
   margin-top: 0.5rem;
 }
 
@@ -98,18 +110,22 @@ nav a:hover {
   height: auto;
 }
 
-
-.reviews, .upgrades {
+/************************************
+  REVIEWS & UPGRADES
+*************************************/
+.reviews,
+.upgrades {
   padding: 1.5rem 2rem;
 }
 
-.reviews h3, .upgrades h3 {
+.reviews h3,
+.upgrades h3 {
   margin-bottom: 0.8rem;
 }
 
 .reviews ul {
-  list-style: disc;
   padding-left: 1.5rem;
+  list-style: disc;
 }
 
 .upgrade-grid {
@@ -119,10 +135,10 @@ nav a:hover {
 }
 
 .upgrade {
-  text-align: center;
-  background-color: #00bfff1a;
+  background: #00bfff1a;
   padding: 1rem;
   border-radius: 5px;
+  text-align: center;
 }
 
 .upgrade img {
@@ -131,62 +147,48 @@ nav a:hover {
 }
 
 .upgrade a {
-  display: block;
   margin-top: 0.5rem;
-  text-decoration: none;
+  display: block;
   color: #007bff;
   font-weight: bold;
+  text-decoration: none;
 }
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #f1f1f1;
-  font-size: 0.9rem;
-}
-
-footer .error-link {
-  color: rgb(0, 94, 255);
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-#wrapper{
+/************************************
+  BACKGROUND WRAPPER
+*************************************/
+#wrapper {
   max-width: 1100px;
   margin: 2rem auto;
-  background-color: white;
+  padding: 2rem;
+  background: white;
   border: 6px solid #1eb1fa;
   border-radius: 12px;
-  padding: 2rem;
   box-shadow: 0 0 30px rgba(47, 166, 170, 0.3);
-
 }
 
 #background {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/site/checkerboard.jpg');
-  background-size: cover;        /* ensures it fills the whole screen */
-  background-repeat: no-repeat;  /* prevents tiling */
-  background-position: center;   /* keeps the center visible */
-  z-index: -1;                   /* sends it behind all content */
+  inset: 0;
+  background: url('/images/site/checkerboard.jpg') center/cover no-repeat;
+  z-index: -1;
 }
 
+/************************************
+  VEHICLE DETAIL PAGE
+*************************************/
 .vehicle-detail {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
 }
+
 .vehicle-detail-img {
   width: 100%;
   max-width: 400px;
-  height: auto;
-  object-fit: cover;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 .vehicle-info {
@@ -194,53 +196,23 @@ footer .error-link {
   min-width: 280px;
 }
 
-
-/* Ensure content adjusts on mobile */
-@media (max-width: 600px) {
-  #wrapper {
-    margin: 1rem;
-    padding: 1rem;
-    border-width: 3px;
-  }
-  .vehicle-detail {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .vehicle-info {
-    text-align: center;
-  }
-
-  nav ul {
-    flex-wrap: wrap;      /* wrap links instead of hiding */
-    justify-content: flex-start;
-  }
-
-  nav li {
-    flex: 1 1 45%;        /* ~2 links per row */
-    text-align: center;
-    min-width: 100px;     /* prevent collapsing too small */
-  }
-}
-
-/* -----------------------------------------
-   FORM STYLING (Add Classification / Inventory)
-------------------------------------------*/
-
+/************************************
+  FORM STYLING
+*************************************/
 .form-wrapper {
-  background-color: #ffffff;
-  padding: 2rem;
-  border: 4px solid #1eb1fa;
-  border-radius: 10px;
   max-width: 600px;
   margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border: 4px solid #1eb1fa;
+  border-radius: 10px;
   box-shadow: 0 0 25px rgba(47, 166, 170, 0.25);
 }
 
 form label {
   display: block;
-  font-weight: bold;
   margin-bottom: 0.4rem;
+  font-weight: bold;
   color: #222;
 }
 
@@ -249,9 +221,9 @@ form select,
 form textarea {
   width: 100%;
   padding: 0.7rem;
+  margin-bottom: 1rem;
   border: 2px solid #1eb1fa;
   border-radius: 6px;
-  margin-bottom: 1rem;
   font-size: 1rem;
 }
 
@@ -264,8 +236,8 @@ form textarea:focus {
 }
 
 .submit-btn {
-  background-color: #0760e6;
-  color: #fff;
+  background: #0760e6;
+  color: white;
   padding: 0.8rem 1.3rem;
   border: none;
   border-radius: 8px;
@@ -275,37 +247,34 @@ form textarea:focus {
 }
 
 .submit-btn:hover {
-  background-color: #074bb3;
+  background: #074bb3;
 }
 
-/* Flash messages */
 .notice {
-  background-color: #e6f4ff;
+  background: #e6f4ff;
   padding: 1rem;
-  border-left: 6px solid #0760e6;
   margin-bottom: 1rem;
+  border-left: 6px solid #0760e6;
   border-radius: 5px;
   font-size: 0.95rem;
 }
 
-
-/* -----------------------------------------
-   MANAGEMENT PAGE LIST BUTTONS
-------------------------------------------*/
+/************************************
+  MANAGEMENT BUTTONS
+*************************************/
 .management-links {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 2rem auto;
   max-width: 500px;
+  margin: 2rem auto;
 }
 
 .management-links a {
-  display: block;
-  text-align: center;
   padding: 1rem;
-  background-color: #1eb1fa;
+  background: #1eb1fa;
   color: black;
+  text-align: center;
   text-decoration: none;
   font-weight: bold;
   border-radius: 10px;
@@ -313,74 +282,115 @@ form textarea:focus {
 }
 
 .management-links a:hover {
-  background-color: #0a94d7;
+  background: #0a94d7;
   color: white;
 }
 
-
-/* -----------------------------------------
-   CLASSIFICATION GRID PAGE
-------------------------------------------*/
+/************************************
+  INVENTORY GRID
+*************************************/
 .grid-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
   margin-top: 2rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .inventory-card {
-  background-color: white;
-  border: 3px solid #1eb1fa;
   padding: 1rem;
+  background: white;
+  border: 3px solid #1eb1fa;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0, 174, 255, 0.15);
   text-align: center;
 }
 
 .inventory-card img {
-  max-width: 100%;
+  width: 100%;
   border-radius: 8px;
   margin-bottom: 0.7rem;
-}
-
-.inventory-card h3 {
-  margin-bottom: 0.3rem;
-}
-
-.inventory-card p {
-  color: #333;
-  margin-bottom: 0.5rem;
 }
 
 .inventory-card a {
   display: inline-block;
   padding: 0.5rem 1rem;
-  background-color: #0760e6;
+  background: #0760e6;
   color: white;
-  text-decoration: none;
   border-radius: 6px;
+  text-decoration: none;
   font-weight: bold;
 }
 
 .inventory-card a:hover {
-  background-color: #074bb3;
+  background: #074bb3;
 }
 
+/************************************
+  FOOTER
+*************************************/
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #f1f1f1;
+  font-size: 0.9rem;
+}
 
-/* -----------------------------------------
-   MOBILE ADJUSTMENTS FOR NEW PAGES
-------------------------------------------*/
+footer .error-link {
+  font-weight: bold;
+  color: rgb(0, 94, 255);
+  text-decoration: underline;
+}
+
+/************************************
+  MOBILE ADJUSTMENTS 
+*************************************/
 @media (max-width: 600px) {
-  .form-wrapper {
-    padding: 1.2rem;
+
+  /* Wrapper */
+  #wrapper {
     margin: 1rem;
-  }
-  
-  .management-links {
-    width: 90%;
+    padding: 1rem;
+    border-width: 3px;
   }
 
+  /* Vehicle Detail */
+  .vehicle-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vehicle-info {
+    text-align: center;
+  }
+
+  /* Nav */
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav li {
+    flex: 1 1 50%;
+    text-align: center;
+  }
+
+  nav a {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Forms */
+  .form-wrapper {
+    margin: 1rem;
+    padding: 1.2rem;
+  }
+
+  /* Cards */
   .inventory-card {
     padding: 0.8rem;
+  }
+
+  .management-links {
+    width: 90%;
   }
 }

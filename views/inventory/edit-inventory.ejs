@@ -1,0 +1,48 @@
+<div class="form-wrapper">
+  <h2><%= title %></h2>
+
+  <% if (messages.notice) { %>
+    <div class="notice"><%= messages.notice %></div>
+  <% } %>
+
+  <form action="/inv/update" method="post">
+
+    <input type="hidden" name="inv_id" value="<%= itemData.inv_id %>">
+
+    <label for="inv_make">Make:</label>
+    <input type="text" name="inv_make" value="<%= itemData.inv_make %>" required>
+
+    <label for="inv_model">Model:</label>
+    <input type="text" name="inv_model" value="<%= itemData.inv_model %>" required>
+
+    <label for="inv_year">Year:</label>
+    <input type="number" name="inv_year" value="<%= itemData.inv_year %>" required>
+
+    <label for="inv_description">Description:</label>
+    <textarea name="inv_description" required><%= itemData.inv_description %></textarea>
+
+    <label for="inv_image">Image Path:</label>
+    <input type="text" name="inv_image" value="<%= itemData.inv_image %>" required>
+
+    <label for="inv_thumbnail">Thumbnail Path:</label>
+    <input type="text" name="inv_thumbnail" value="<%= itemData.inv_thumbnail %>" required>
+
+    <label for="inv_price">Price:</label>
+    <input type="number" name="inv_price" value="<%= itemData.inv_price %>" required>
+
+    <label for="inv_miles">Miles:</label>
+    <input type="number" name="inv_miles" value="<%= itemData.inv_miles %>" required>
+
+    <label for="inv_color">Color:</label>
+    <input type="text" name="inv_color" value="<%= itemData.inv_color %>" required>
+
+    <label for="classification_id">Classification:</label>
+    <select name="classification_id">
+      <%= classificationList %>
+    </select>
+
+    <button class="submit-btn">Update Inventory</button>
+  </form>
+</div>
+
+

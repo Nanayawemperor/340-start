@@ -1,15 +1,20 @@
+<%- include('../partials/header') %>
+
 <main>
-  <h1>Inventory Management</h1>
+  <h2>Manage Inventory</h2>
+  <p>Select a classification from the list to see the items belonging to that classification.</p>
 
-  <!-- Flash Messages -->
-  <% if (messages.info) { %>
-    <div class="flash"><%= messages.info %></div>
-  <% } %>
+  <!-- Classification Dropdown List (inserted by utilities.buildClassificationList) -->
+  <div id="classificationListContainer">
+    <%- classificationList %>
+  </div>
 
-  <ul>
-    <li><a href="/inv/add-classification">Add New Classification</a></li>
-    <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
-  </ul>
+  <!-- Inventory Table -->
+  <table id="inventoryDisplay" aria-live="polite"></table>
+
+  <!-- No JS fallback -->
+  <noscript>JavaScript must be enabled to use this page.</noscript>
 </main>
 
-
+<!-- Client-side JS: served from /public/js/inventory.js -->
+<script src="/js/inventory.js"></script>
