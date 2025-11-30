@@ -85,12 +85,10 @@ Util.buildClassificationGrid = async function(data){
 
   Util.buildClassificationList = async function(selectedId = null) {
   const data = await invModel.getClassifications(); // should return { rows: [...] }
-  let classificationList = '<select name="classification_id" id="classificationList" required>';
-  classificationList += '<option value="">Choose a Classification</option>';
+  let classificationList = '';
   data.rows.forEach((row) => {
     classificationList += `<option value="${row.classification_id}"${selectedId && row.classification_id == selectedId ? ' selected' : ''}>${row.classification_name}</option>`;
   });
-  classificationList += '</select>';
   return classificationList;
 }
 

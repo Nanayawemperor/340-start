@@ -219,47 +219,93 @@ invCont.buildEditInventory = async function (req, res, next) {
       return res.redirect("/inv/management");
     }
 
-    const nav = await utilities.getNav();
     const classificationList = await utilities.buildClassificationList(itemData.classification_id);
+    const nav = await utilities.getNav();
 
     res.render("inventory/edit-inventory", {
       title: `Edit ${itemData.inv_make} ${itemData.inv_model}`,
       nav,
-      classificationList,
-      itemData,
+      classificationList, // this is the <option> HTML
+      itemData,           // always pass itemData
       messages: req.flash(),
+      errors: null,
     });
-
   } catch (err) {
     next(err);
   }
 };
 
 /* ***************************
- *  Update Inventory Item
+ *  Update Inventory Data
  * ************************** */
 invCont.updateInventory = async function (req, res, next) {
   try {
-    const updatedItem = req.body;
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
 
-    const result = await invModel.updateInventory(updatedItem);
+    const updateResult = await invModel.updateInventory(
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id
+    );
 
-    if (result) {
-      req.flash(
-        "notice",
-        `${updatedItem.inv_make} ${updatedItem.inv_model} updated successfully.`
-      );
-      return res.redirect("/inv/management");
+    const nav = await utilities.getNav();
+
+    if (updateResult) {
+      const itemName = `${updateResult.inv_make} ${updateResult.inv_model}`;
+      req.flash("notice", `The ${itemName} was successfully updated.`);
+      return res.redirect("/inv/"); // redirect to management view
+    } else {
+      const itemData = {  // build itemData from POSTed values
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color,
+        classification_id,
+      };
+
+      const classificationList = await utilities.buildClassificationList(classification_id);
+
+      req.flash("notice", "Sorry, the update failed.");
+
+      return res.status(500).render("inventory/edit-inventory", {
+        title: `Edit ${inv_make} ${inv_model}`,
+        nav,
+        itemData,            // <-- PASS itemData here
+        classificationList,  // <-- HTML <option> list
+        messages: req.flash(),
+        errors: null,
+      });
     }
-
-    req.flash("notice", "Update failed. Please try again.");
-    res.redirect(`/inv/edit/${updatedItem.inv_id}`);
-
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
-
 
 
 module.exports = invCont;

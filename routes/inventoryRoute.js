@@ -32,6 +32,8 @@ router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInvento
  * ******************************* */
 router.post(
   "/update",
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
 );
 
