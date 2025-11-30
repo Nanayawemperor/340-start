@@ -56,6 +56,12 @@ router.post(
   utilities.handleErrors(invController.addInventory)
 );
 
+// Deliver delete confirmation view
+router.get("/delete/:invId", invController.buildDeleteInventoryView);
+
+// Process delete
+router.post("/delete", invController.deleteInventory);
+
 // Footer test link to trigger an error (debug)
 router.get("/cause-error", (req, res) => {
   throw new Error("Test error");

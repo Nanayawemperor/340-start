@@ -4,10 +4,11 @@
   <h2>Manage Inventory</h2>
   <p>Select a classification from the list to see the items belonging to that classification.</p>
 
-  <!-- Classification Dropdown List (inserted by utilities.buildClassificationList) -->
-  <div id="classificationListContainer">
-    <%- classificationList %>
-  </div>
+  <!-- Classification Dropdown -->
+  <label for="classificationList">Category</label>
+  <select name="classification_id" id="classificationList" required>
+    <%- classificationList %> <!-- raw HTML from controller -->
+  </select>
 
   <!-- Inventory Table -->
   <table id="inventoryDisplay" aria-live="polite"></table>
@@ -16,5 +17,5 @@
   <noscript>JavaScript must be enabled to use this page.</noscript>
 </main>
 
-<!-- Client-side JS: served from /public/js/inventory.js -->
+<!-- Client-side JS -->
 <script src="/js/inventory.js"></script>

@@ -5,71 +5,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const classificationList = document.querySelector("#classificationList");
   const inventoryDisplay = document.getElementById("inventoryDisplay");
 
-  if (!classificationList || !inventoryDisplay) {
-    // Elements not present; nothing to do
-    return;
-  }
+  if (!classificationList || !inventoryDisplay) return;
 
+  // Fetch inventory when selection changes
   classificationList.addEventListener("change", function () {
     const classification_id = classificationList.value;
-    console.log(`classification_id is: ${classification_id}`);
 
-    // match the route defined in inventoryRoute.js
+    if (!classification_id) {
+      inventoryDisplay.innerHTML = "<tr><td colspan='3'>Please select a classification.</td></tr>";
+      return;
+    }
+
     const classIdURL = `/inv/getInventory/${classification_id}`;
 
     fetch(classIdURL)
-      .then(function (response) {
-        if (response.ok) {
-          return response.json();
-        }
+      .then(response => {
+        if (response.ok) return response.json();
         throw Error("Network response was not OK");
       })
-      .then(function (data) {
-        console.log(data);
+      .then(data => {
         buildInventoryList(data);
       })
-      .catch(function (error) {
-        console.error("There was a problem fetching inventory:", error.message);
+      .catch(error => {
+        console.error("Problem fetching inventory:", error.message);
         inventoryDisplay.innerHTML = `<tr><td colspan="3" class="notice">There was a problem loading inventory.</td></tr>`;
       });
   });
 
-  // If you want the page to auto-load items for a default selection
-  // you could trigger change() here if classificationList.value is set:
-  // if (classificationList.value) classificationList.dispatchEvent(new Event('change'));
+  // Auto-load items for default selection
+  if (classificationList.value) {
+    classificationList.dispatchEvent(new Event('change'));
+  }
 });
 
-// Build inventory items into HTML table components and inject into DOM
+// Build inventory items into HTML table
 function buildInventoryList(data) {
   const inventoryDisplay = document.getElementById("inventoryDisplay");
-
-  // header
   let dataTable = "<thead>";
-  dataTable += "<tr><th>Vehicle Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>";
-  dataTable += "</thead>";
-
-  // body
-  dataTable += "<tbody>";
+  dataTable += "<tr><th>Vehicle Name</th><th>&nbsp;</th><th>&nbsp;</th></tr>";
+  dataTable += "</thead><tbody>";
 
   if (!data || data.length === 0) {
     dataTable += "<tr><td colspan='3' class='notice'>No vehicles were found for this classification.</td></tr>";
   } else {
-    data.forEach(function (element) {
-      console.log(element.inv_id + ", " + element.inv_model);
+    data.forEach(item => {
       dataTable += `<tr>
-        <td>${escapeHtml(element.inv_make)} ${escapeHtml(element.inv_model)}</td>
-        <td><a href="/inv/edit/${element.inv_id}" title="Click to update">Modify</a></td>
-        <td><a href="/inv/delete/${element.inv_id}" title="Click to delete">Delete</a></td>
+        <td>${escapeHtml(item.inv_make)} ${escapeHtml(item.inv_model)}</td>
+        <td><a href="/inv/edit/${item.inv_id}" title="Click to update">Modify</a></td>
+        <td><a href="/inv/delete/${item.inv_id}" title="Click to delete">Delete</a></td>
       </tr>`;
     });
   }
 
   dataTable += "</tbody>";
-
   inventoryDisplay.innerHTML = dataTable;
 }
 
-// tiny HTML escape to avoid accidental injection from DB content
+// Simple HTML escape to prevent injection
 function escapeHtml(str) {
   if (!str) return "";
   return String(str)
