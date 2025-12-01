@@ -35,4 +35,11 @@ router.get(
     utilities.handleErrors(accountController.buildAccountManagement)
 )
 
+// Logout route
+router.get('/logout', (req, res) => {
+  res.clearCookie('sessionId');
+  req.flash('notice', 'You have successfully logged out.');
+  res.redirect('/');
+});
+
 module.exports = router;

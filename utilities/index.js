@@ -104,24 +104,35 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 * Middleware to check token validity
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
- if (req.cookies.jwt) {
+  // Default values for views
+  res.locals.loggedin = false
+  res.locals.accountData = null
+
+  const token = req.cookies.jwt
+  if (!token) {
+    return next()
+  }
+
   jwt.verify(
-   req.cookies.jwt,
-   process.env.ACCESS_TOKEN_SECRET,
-   function (err, accountData) {
-    if (err) {
-     req.flash("Please log in")
-     res.clearCookie("jwt")
-     return res.redirect("/account/login")
+    token,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+      if (err) {
+        // Token invalid → treat as logged out
+        res.locals.loggedin = false
+        res.locals.accountData = null
+        res.clearCookie("jwt")
+        return next()
+      }
+
+      // ⭐ Logged in — save data for use in header.ejs
+      res.locals.loggedin = true
+      res.locals.accountData = accountData
+      next()
     }
-    res.locals.accountData = accountData
-    res.locals.loggedin = 1
-    next()
-   })
- } else {
-  next()
- }
+  )
 }
+
 
 /* ****************************************
  *  Check Login
