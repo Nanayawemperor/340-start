@@ -1,20 +1,26 @@
 
 
+<main>
+  <h1>Account Management</h1>
 
-  <main>
-    <% if (messages && messages.notice) { %>
-      <div class="notice"><%= messages.notice %></div>
-    <% } %>
+  <!-- Greeting -->
+  <h2>Welcome <%= accountData.account_firstname %></h2>
 
-    <% if (errors && errors.length > 0) { %>
-      <ul class="notice">
-        <% errors.forEach(e => { %>
-          <li><%= e.msg %></li>
-        <% }) %>
-      </ul>
-    <% } %>
+  <!-- Update Account Link (always shown) -->
+  <p>
+    <a href="/account/update/<%= accountData.account_id %>">
+      Update Account Information
+    </a>
+  </p>
 
-    <h1>You're logged in</h1>
-  </main>
+  <!-- Inventory Management Section ONLY for Employee/Admin -->
+  <% if (accountData.account_type === "Employee" || accountData.account_type === "Admin") { %>
+    <h3>Inventory Management</h3>
+    <p>
+      <a href="/inv/management">Manage Inventory</a>
+    </p>
+  <% } %>
 
-    
+</main>
+
+

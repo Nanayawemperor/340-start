@@ -4,13 +4,12 @@ const router = new express.Router();
 const utilities = require("../utilities");
 const accountController = require("../controllers/accountController");
 const regValidate = require("../utilities/account-validation");
-const accountValidate = require('../utilities/account-validation'); 
+const accountValidate = require('../utilities/account-validation');
 
-
-// Route to build the My Account view
+// Login View
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
-// Route to build the Registration view
+// Registration View
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 router.post(
@@ -18,9 +17,9 @@ router.post(
   regValidate.registrationRules(),
   regValidate.checkRegData,
   utilities.handleErrors(accountController.registerAccount)
-)
+);
 
-// Process the login attempt
+// Login Processing
 router.post(
   "/login",
   accountValidate.loginRules(),
@@ -28,18 +27,18 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
-// Account management View
+// Account Management View
 router.get(
-    '/',
-    utilities.checkLogin,
-    utilities.handleErrors(accountController.buildAccountManagement)
-)
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
 
-// Logout route
-router.get('/logout', (req, res) => {
-  res.clearCookie('sessionId');
-  req.flash('notice', 'You have successfully logged out.');
-  res.redirect('/');
+// Logout
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  req.flash("notice", "You have successfully logged out.");
+  res.redirect("/");
 });
 
 module.exports = router;
