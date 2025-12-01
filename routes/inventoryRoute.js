@@ -11,7 +11,8 @@ router.get(
 );
 
 // Inventory management page (no extra path, accessible at /inv/management)
-router.get("/management", utilities.handleErrors(invController.buildManagementView));
+router.get("/management", utilities.checkJWTToken, 
+  utilities.checkEmployeeOrAdmin,utilities.handleErrors(invController.buildManagementView));
 
 // Route to build inventory by classification view (human-facing)
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
@@ -20,12 +21,18 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:invId", utilities.handleErrors(invController.buildInventoryDetail));
 
 // Route to build the Add Classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.get("/add-classification", 
+  utilities.checkJWTToken, 
+  utilities.checkEmployeeOrAdmin,
+  utilities.handleErrors(invController.buildAddClassification));
 
 // *******************************
 // Route to build the "Edit Inventory" View
 // *******************************
-router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInventory));
+router.get("/edit/:invId", 
+  utilities.checkJWTToken, 
+  utilities.checkEmployeeOrAdmin,
+  utilities.handleErrors(invController.buildEditInventory));
 
 /* *******************************
  *  Process Update Inventory
@@ -47,17 +54,22 @@ router.post(
 
 // Route to build the Add Inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+  utilities.checkJWTToken, 
+  utilities.checkEmployeeOrAdmin,
+  utilities.handleErrors(invController.buildAddInventory);
 
 // POST process add-inventory
 router.post(
   "/add-inventory",
+  utilities.checkJWTToken, 
+  utilities.checkEmployeeOrAdmin,
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
 );
 
 // Deliver delete confirmation view
-router.get("/delete/:invId", invController.buildDeleteInventoryView);
+router.get("/delete/:invId", utilities.checkJWTToken, utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.buildDeleteInventoryView));
 
 // Process delete
 router.post("/delete", invController.deleteInventory);
