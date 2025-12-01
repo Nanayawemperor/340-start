@@ -131,5 +131,51 @@ async function buildAccountManagement(req, res, next) {
   }
 }
 
+async function updateAccount(req, res, next) {
+  const { account_id, account_firstname, account_lastname, account_email } = req.body;
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement };
+  try {
+    const updateResult = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
+
+    if (updateResult) {
+      req.flash("notice", "Account information updated successfully.");
+      return res.redirect("/account/");
+    }
+
+    req.flash("notice", "Update failed.");
+    return res.redirect(`/account/update/${account_id}`);
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updatePassword(req, res, next) {
+  const { account_id, account_password } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hash(account_password, 10);
+
+    const result = await accountModel.updatePassword(account_id, hashedPassword);
+
+    if (result) {
+      req.flash("notice", "Password updated successfully.");
+      return res.redirect("/account/");
+    }
+
+    req.flash("notice", "Password update failed.");
+    return res.redirect(`/account/update/${account_id}`);
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, updateAccount, updatePassword };

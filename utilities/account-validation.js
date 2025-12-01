@@ -114,4 +114,81 @@ validate.checkLoginData = async (req, res, next) => {
   next();
 };
 
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage("First name is required."),
+
+    body("account_lastname")
+      .trim()
+      .isLength({ min: 1 })
+      .withMessage("Last name is required."),
+
+    body("account_email")
+      .trim()
+      .isEmail()
+      .withMessage("A valid email is required.")
+  ];
+};
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+
+    return res.status(400).render("account/update", {
+      title: "Update Account Information",
+      nav,
+      errors: errors.array(),
+      messages: req.flash(),
+      accountData: {
+        account_id: req.body.account_id,
+        account_firstname: req.body.account_firstname,
+        account_lastname: req.body.account_lastname,
+        account_email: req.body.account_email
+      }
+    });
+  }
+
+  next();
+};
+
+
+validate.passwordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1
+      })
+      .withMessage("Password does not meet requirements.")
+  ];
+};
+
+validate.checkPasswordData = async (req, res, next) => {
+  const errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    const accountData = await accountModel.getAccountById(req.body.account_id);
+    const nav = await utilities.getNav();
+    
+    return res.status(400).render("account/update", {
+      title: "Update Account Information",
+      nav,
+      errors: errors.array(),
+      messages: req.flash(),
+      accountData
+    });
+  }
+  next();
+};
+
+
 module.exports = validate
