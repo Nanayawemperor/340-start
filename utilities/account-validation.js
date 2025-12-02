@@ -190,5 +190,29 @@ validate.checkPasswordData = async (req, res, next) => {
   next();
 };
 
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const accountData = {
+      account_id: req.body.account_id,
+      account_firstname: req.body.account_firstname,
+      account_lastname: req.body.account_lastname,
+      account_email: req.body.account_email
+    };
+    const nav = await utilities.getNav();
+
+    return res.render("account/update", {
+      title: "Update Account Information",
+      nav,
+      errors: errors.array(),
+      messages: req.flash(),
+      accountData
+    });
+  }
+  next();
+};
+
+
 
 module.exports = validate

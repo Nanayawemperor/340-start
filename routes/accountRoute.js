@@ -41,6 +41,12 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+router.get(
+  "/update/:account_id",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdateAccount)
+);
+
 // UPDATE ACCOUNT INFORMATION
 router.post(
   "/update",

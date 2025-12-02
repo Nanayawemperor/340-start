@@ -52,6 +52,30 @@ async function getAccountByEmail (account_email) {
   }
 }
 
+/* *****************************
+ *  Get account data by account_id
+ * **************************** */
+async function getAccountById(account_id) {
+  try {
+    const sql = `
+      SELECT 
+        account_id, 
+        account_firstname, 
+        account_lastname, 
+        account_email,
+        account_type
+      FROM account
+      WHERE account_id = $1
+    `;
+    const result = await pool.query(sql, [account_id]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("getAccountById error:", error);
+    return null;
+  }
+}
+
+
 async function updateAccount(account_id, firstname, lastname, email) {
   try {
     const sql = `
@@ -86,4 +110,4 @@ async function updatePassword(account_id, hashedPassword) {
 
 
 
-    module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, updatePassword};
+    module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, updatePassword, getAccountById};

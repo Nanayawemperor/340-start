@@ -135,21 +135,20 @@ async function updateAccount(req, res, next) {
   const { account_id, account_firstname, account_lastname, account_email } = req.body;
 
   try {
-    const updateResult = await accountModel.updateAccount(
+    const result = await accountModel.updateAccount(
       account_id,
       account_firstname,
       account_lastname,
       account_email
     );
 
-    if (updateResult) {
+    if (result) {
       req.flash("notice", "Account information updated successfully.");
       return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Update failed.");
+      return res.redirect(`/account/update/${account_id}`);
     }
-
-    req.flash("notice", "Update failed.");
-    return res.redirect(`/account/update/${account_id}`);
-
   } catch (error) {
     next(error);
   }
@@ -160,17 +159,32 @@ async function updatePassword(req, res, next) {
 
   try {
     const hashedPassword = await bcrypt.hash(account_password, 10);
-
     const result = await accountModel.updatePassword(account_id, hashedPassword);
 
     if (result) {
       req.flash("notice", "Password updated successfully.");
       return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Password update failed.");
+      return res.redirect(`/account/update/${account_id}`);
     }
+  } catch (error) {
+    next(error);
+  }
+}
+async function buildUpdateAccount(req, res, next) {
+  try {
+    const account_id = req.params.account_id;
+    const accountData = await accountModel.getAccountById(account_id);
+    const nav = await utilities.getNav();
 
-    req.flash("notice", "Password update failed.");
-    return res.redirect(`/account/update/${account_id}`);
-
+    return res.render("account/update", {
+      title: "Update Account Information",
+      nav,
+      accountData,
+      messages: req.flash(),
+      errors: []
+    });
   } catch (error) {
     next(error);
   }
@@ -178,4 +192,4 @@ async function updatePassword(req, res, next) {
 
 
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, updateAccount, updatePassword };
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildUpdateAccount, buildAccountManagement, updateAccount, updatePassword };
